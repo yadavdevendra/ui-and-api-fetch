@@ -1,5 +1,5 @@
-import { Banner, Card, Grid, Icon, Select } from "@shopify/polaris";
-import { SortDescendingMajor } from "@shopify/polaris-icons";
+import { Banner, Card,Select } from "@shopify/polaris";
+
 import { useCallback, useState } from "react";
 import FillterExample from './FillterExample'
 import TabExample from "./TabExample";
@@ -8,14 +8,10 @@ import Table from "./Table";
 
 function Listing() {
     const [selected, setSelected] = useState('today');
-
-
-
     const options = [
         { label: 'new_account', value: 'Select Name' },
      
     ];
-
     const handleSelectChange = useCallback((value) => setSelected(value), []);
 
     return (

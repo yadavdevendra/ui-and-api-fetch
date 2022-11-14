@@ -9,7 +9,8 @@ function Dashboard() {
             <Navigation.Section
                 items={[
                     {label: 'OverView'},
-                    { url: '/listing',label: 'Listing'},
+                    { url: '/listing',
+                    label: 'Listing'},
                     {label: 'Settings' },
                     {label: 'Products Linking'},
                     {label: 'FAQs'},
