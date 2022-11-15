@@ -1,5 +1,5 @@
-import {Card, Tabs} from '@shopify/polaris';
-import {useState, useCallback} from 'react';
+import { Card, Page, Tabs } from '@shopify/polaris';
+import { useState, useCallback } from 'react';
 
 function TabExample() {
   const [selected, setSelected] = useState(0);
@@ -8,13 +8,13 @@ function TabExample() {
     (selectedTabIndex) => setSelected(selectedTabIndex),
     [],
   );
-const tabs = [
-    {content: "All"},
-    {content: "Not Listed 64" },
-    {content: "Inactive"},
-    {content: "Incomplete"},
-    {content: "Active"},
-    {content: "Error"},
+  const tabs = [
+    { content: "All" },
+    { content: "Not Listed 64" },
+    { content: "Inactive" },
+    { content: "Incomplete" },
+    { content: "Active" },
+    { content: "Error" },
   ];
   return (
     <Card>

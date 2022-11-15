@@ -1,5 +1,6 @@
-import { DataTable, Grid, Thumbnail } from "@shopify/polaris";
-import { useEffect, useState } from "react";
+import { DataTable, Grid, Page, Thumbnail } from "@shopify/polaris";
+import { useEffect, useState} from "react";
+import { Link } from "react-router-dom";
 // import { rows } from "../Data/Data";
 
 function Table() {
@@ -19,6 +20,10 @@ function Table() {
           "Ced-Source-Name": "shopify",
           "Ced-Target-Id": 640,
           "Ced-Target-Name": "amazon",
+          "count":50,
+         "productOnly":true,
+         "target_marketplace":'eyjtYXJrZXRwbGFjZSI6ImFsbCIsInNob3BfaWQi0m51bGx9',
+
         },
       }
     )
@@ -29,7 +34,7 @@ function Table() {
           // console.log(elem,'asdfafds')
           tempRows.push([
             <Thumbnail source={elem?.['main_image']} />,
-            elem['title'],
+           <Link to='/listing/templet'> {elem['title']}</Link>,
             ...test(elem['items'], elem['source_product_id']),
             elem['variant_attributes'],
           ])
@@ -65,9 +70,9 @@ function Table() {
     getData()
   }, []);
   return (
-    <>
-      <Grid columns={{ xs: 2, sm: 4, md: 4, lg: 5, xl: 12 }}>
-        <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 12, xl: 6 }}>
+    <Page fullWidth>
+      <Grid columns={{ xs: 2, sm: 4, md: 4, lg: 2, xl: 12 }}>
+        <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 12, xl: 12 }}>
           <DataTable 
             columnContentTypes={[
               "text",
@@ -88,7 +93,7 @@ function Table() {
           />
         </Grid.Cell>
       </Grid>
-    </>
+    </Page>
   );
 }
 export default Table;

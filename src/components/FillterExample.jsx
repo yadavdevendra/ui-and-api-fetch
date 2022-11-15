@@ -1,25 +1,17 @@
-import {ResourceList,Filters} from "@shopify/polaris";
+import {ResourceList,Filters, Page, Button, Card} from "@shopify/polaris";
   
   function FillterExample() {
     const filters = [
       {
-        key: "SyncStatus",
-        label: "Sync Status",
+        key: "MoreFillter",
+        label: "More Fillter",
         shortcut: true
-      },
-      {
-        key: "AmazonLockup",
-        label: "Amazon Lockup",
-        shortcut: true
-      },
-      {
-        key: "BulkUpdate",
-        label: "Bulk update",
-        shortcut: true
-      },
+      }
+     
     ]
     return (
-      <div >
+      <div style={{display:"flex"}}>
+      <Card></Card>
           <ResourceList
             filterControl={
               <Filters
@@ -29,11 +21,8 @@ import {ResourceList,Filters} from "@shopify/polaris";
             }
             items={[
               {
-                id: 341,
+                id: 1,
               },
-              {
-                id: 256,
-              }
             ]}
             renderItem={() => {
               return (
@@ -41,6 +30,11 @@ import {ResourceList,Filters} from "@shopify/polaris";
               );
             }}
           />
+          <div style={{}}>
+          <Button>ADADA</Button>
+          <Button>ADADA</Button>
+          <Button>ADADA</Button>
+          </div>
       </div>
     );
   }

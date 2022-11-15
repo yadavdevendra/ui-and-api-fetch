@@ -1,4 +1,4 @@
-import { Banner, Card,Select } from "@shopify/polaris";
+import { Banner, Card,Page,Select } from "@shopify/polaris";
 
 import { useCallback, useState } from "react";
 import FillterExample from './FillterExample'
@@ -15,6 +15,7 @@ function Listing() {
     const handleSelectChange = useCallback((value) => setSelected(value), []);
 
     return (
+        <Page fullWidth>
         <Card >
             <div style={{ display: "flex" }}>
                 <Card.Section title="Listing">
@@ -34,7 +35,7 @@ function Listing() {
 
                
             </div>
-            <Card.Section>
+           
                 <Banner
                     title="Some of your product variants are missing weights"
                     status="warning"
@@ -46,12 +47,14 @@ function Listing() {
                         shipping labels in Shopify.
                     </p>
                 </Banner>
-            </Card.Section>
+       
+            <Card >
             <TabExample />
             <FillterExample />
             <Table />
-
+            </Card>
         </Card>
+        </Page>
     );
 }
 export default Listing;
