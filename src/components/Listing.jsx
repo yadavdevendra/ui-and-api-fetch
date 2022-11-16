@@ -3,6 +3,7 @@ import { Banner, Card,Page,Select } from "@shopify/polaris";
 import { useCallback, useState } from "react";
 import FillterExample from './FillterExample'
 import TabExample from "./TabExample";
+import Newtemplate from './Newtemplate'
 
 import Table from "./Table";
 
@@ -51,7 +52,8 @@ function Listing() {
             <Card >
             <TabExample />
             <FillterExample />
-            <Table />
+   
+            <Newtemplate/>
             </Card>
         </Card>
         </Page>
