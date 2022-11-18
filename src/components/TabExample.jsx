@@ -1,4 +1,4 @@
-import { Card, Page, Tabs } from '@shopify/polaris';
+import { Badge, Card,Tabs } from '@shopify/polaris';
 import { useState, useCallback } from 'react';
 
 function TabExample() {
@@ -9,12 +9,48 @@ function TabExample() {
     [],
   );
   const tabs = [
-    { content: "All" },
-    { content: "Not Listed 64" },
-    { content: "Inactive" },
-    { content: "Incomplete" },
-    { content: "Active" },
-    { content: "Error" },
+    {
+      content: (
+        <span>
+          All <Badge>10+</Badge>
+        </span>
+      )
+    },
+    {
+      content: (
+        <span>
+          Not Listed <Badge>64</Badge>
+        </span>
+      )
+    },
+    {
+      content: (
+        <span>
+          Inactive <Badge>1</Badge>
+        </span>
+      )
+    },
+    {
+      content: (
+        <span>
+          Incomplete <Badge>0</Badge>
+        </span>
+      )
+    },
+    {
+      content: (
+        <span>
+          Active <Badge>0</Badge>
+        </span>
+      )
+    },
+    {
+      content: (
+        <span>
+          Error <Badge>0</Badge>
+        </span>
+      )
+    },
   ];
   return (
     <Card>

@@ -1,33 +1,31 @@
 import {ResourceList,Filters, Button } from "@shopify/polaris";
+import { useState } from "react";
   
   function FillterExample() {
+    const queryValue='Serach the value'
     const filters = [
       {
         key: "MoreFillter",
         label: "More Fillter",
         shortcut: true
       },
-      {
-        key: "MoreFillter",
-        label: "More Fillter",
-        shortcut: true
-      }
-     
     ]
     return (
 
       <div style={{display:"flex",justifyContent:"space-between"}}>
       <div>
-          <ResourceList 
+          <ResourceList
             filterControl={
-              <Filters
+              <Filters 
                 filters={filters}
+                queryValue={queryValue}
               />
-            
+              
             }
             items={[
               {
                 id: 1,
+               
               },
               
             ]}
@@ -41,8 +39,8 @@ import {ResourceList,Filters, Button } from "@shopify/polaris";
           </div>
           <div style={{marginTop:"20px"}}>
           <Button>Symc Status</Button>
-          <Button>amazon account</Button>
-          <Button>select</Button>
+          <Button>Amazon Account</Button>
+          <Button>Bulk Update</Button>
           </div>
       </div>
     );

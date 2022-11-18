@@ -3,9 +3,10 @@ import { Banner, Card,Page,Select } from "@shopify/polaris";
 import { useCallback, useState } from "react";
 import FillterExample from './FillterExample'
 import TabExample from "./TabExample";
-import Newtemplate from './Newtemplate'
-
-import Table from "./Table";
+import Table2 from "./Table2";
+// import Newtemplate from './Newtemplate'
+// import Table from "./Table";
+import Table1 from "./Table1";
 
 function Listing() {
     const [selected, setSelected] = useState('today');
@@ -32,11 +33,7 @@ function Listing() {
                     value={selected}
                 />
                 </Card.Section>
-             
-
-               
             </div>
-           
                 <Banner
                     title="Some of your product variants are missing weights"
                     status="warning"
@@ -48,12 +45,11 @@ function Listing() {
                         shipping labels in Shopify.
                     </p>
                 </Banner>
-       
             <Card >
             <TabExample />
             <FillterExample />
-   
-            <Newtemplate/>
+            {/*<Table2/>*/}
+            <Table1/>
             </Card>
         </Card>
         </Page>
