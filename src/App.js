@@ -4,7 +4,7 @@ import '@shopify/polaris/build/esm/styles.css';
 import { Routes, Route } from "react-router-dom";
 import Listing from './components/Listing';
 import Dashboard from './components/Dashboard';
-import TitleComponents from './Title/TitleComponents';
+import TitleComponents from './edit/TitleComponents';
 
 function App() {
   return (
