@@ -10,18 +10,19 @@ import {
 import React, { useEffect } from "react";
 import { useState, useCallback } from "react";
 
-function HandlingTime({title}) {
+function HandlingTime({ data, setSave, save }) {
     const [selected, setSelected] = useState([]);
     const [textFieldValue, setTextFieldValue] = useState("");
 
     function handleChoiceListChange(value) {
         setSelected(value);
-        console.log("selected", selected);
+
+        // console.log("selected", selected);
     }
 
     function handleTextFieldChange(value) {
         setTextFieldValue(value);
-        console.log("textFieldValue", textFieldValue);
+        // console.log("textFieldValue", textFieldValue);
     }
 
     const renderChildren = useCallback(
@@ -37,13 +38,35 @@ function HandlingTime({title}) {
             ),
         [handleTextFieldChange, textFieldValue]
     );
-    useEffect(()=>{
-        if(title){
-            setSelected("Use the same Handling Time As in the Product Template")
-        }else{
-            setSelected('')
+    const options = [
+        {
+            label: "Use the same Handling Time As in the Product Template",
+            value: data?.handletime
+        },
+        {
+            label: "Set a Custom Handling Time",
+            value: "custom",
+            renderChildren,
+        },
+    ]
+    useEffect(() => {
+        if (data!==undefined) {
+            if (data.handletime !=="") {
+            
+                setSelected([options[0].value])
+                setSave((prevSave) => {
+                    return { ...prevSave, handletime: options[0].value }
+                })
+      
+            } else {
+         
+                setSelected([options[1].value])
+                setSave((prevSave) => {
+                    return { ...prevSave, unset: { ...prevSave.unset,handletime: options[1].value} }
+                })
+            }
         }
-            },[])
+    }, [data])
 
     return (
         <Page fullWidth
@@ -65,17 +88,7 @@ function HandlingTime({title}) {
                 <Layout.Section>
                     <Card sectioned>
                         <ChoiceList
-                            choices={[
-                                {
-                                    label: "Use the same Handling Time As in the Product Template",
-                                    value: "Use the same Handling Time As in the Product Template"
-                                },
-                                {
-                                    label: "Set a Custom Handling Time",
-                                    value: "Set a Custom Handling Time",
-                                    renderChildren,
-                                },
-                            ]}
+                            choices={options}
                             selected={selected}
                             onChange={handleChoiceListChange}
                         />

@@ -10,12 +10,13 @@ import {
 import React, { useEffect } from "react";
 import { useState, useCallback } from "react";
 
-function Quantityofedit({title}) {
+function Quantityofedit({data,setSave, save }) {
     const [selected, setSelected] = useState([]);
     const [textFieldValue, setTextFieldValue] = useState("");
 
     function handleChoiceListChange(value) {
         setSelected(value);
+    
         console.log("selected", selected);
     }
 
@@ -37,13 +38,33 @@ function Quantityofedit({title}) {
             ),
         [handleTextFieldChange, textFieldValue]
     );
+    const options = [
+        {
+            label: "Set the same Product Quantity for Shopify and Amazon",
+            value: data?.quantity,
+        },
+        {
+            label: "Set a Custom Product Quantity for Amazon",
+            value: "custom",
+            renderChildren,
+        },
+    ]
     useEffect(()=>{
-        if(title){
-            setSelected("Set the same Product Quantity for Shopify and Amazon")
+        if(data !== undefined){
+        if(data.quantity!==""){
+            setSelected([options[0].value])
+            setSave((prevSave) => {
+                return {...prevSave, quantity: options[0].value}
+            })
+
         }else{
-            setSelected('')
+            setSelected([options[1].value])
+            setSave((prevSave) => {
+                return {...prevSave, unset: {...prevSave.unset, quantity: options[1].value }}
+            })
         }
-            },[])
+    }  
+            },[data])
 
     return (
         <Page fullWidth
@@ -65,17 +86,7 @@ function Quantityofedit({title}) {
                 <Layout.Section>
                     <Card sectioned>
                         <ChoiceList
-                            choices={[
-                                {
-                                    label: "Set the same Product Quantity for Shopify and Amazon",
-                                    value: "Set the same Product Quantity for Shopify and Amazon",
-                                },
-                                {
-                                    label: "Set a Custom Product Quantity for Amazon",
-                                    value: "Set a Custom Product Quantity for Amazon",
-                                    renderChildren,
-                                },
-                            ]}
+                            choices={options}
                             selected={selected}
                             onChange={handleChoiceListChange}
                         />

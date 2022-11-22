@@ -1,35 +1,17 @@
 import {
-    Page,
-    Layout,
-    Card,
-    TextContainer,
-    Text,
+    Page, Layout, Card, TextContainer, Text,
     TextField,
     ChoiceList,
 } from "@shopify/polaris";
 import React, { useEffect } from "react";
 import { useState, useCallback } from "react";
 
-function Descriptionofedit({ title, setSave, save, index = 1 }) {
-    const [selected, setSelected] = useState([]);
+function Descriptionofedit({ data, setSave, save }) {
+
+// console.log(save,"desct save");
+
+    const [selected, setSelected] = useState(["Set the same Product Description for Shopify and Amazon"]);
     const [textFieldValue, setTextFieldValue] = useState("");
-
-    function handleChoiceListChange(value) {
-        setSelected(value);
-        save.map((item, i) => {
-            if (index === i) {
-                return { ...item, title: value }
-            }
-            return item
-        })
-        console.log("selected", selected);
-    }
-
-    function handleTextFieldChange(value) {
-        setTextFieldValue(value);
-        console.log("textFieldValue", textFieldValue);
-    }
-
     const renderChildren = useCallback(
         (isSelected) =>
             isSelected && (
@@ -43,20 +25,45 @@ function Descriptionofedit({ title, setSave, save, index = 1 }) {
             ),
         [handleTextFieldChange, textFieldValue]
     );
+    const options = [
+        {
+            label: "Set the same Product Description for Shopify and Amazon",
+            value: data?.description,
+        },
+        {
+            label: "Set a Custom Product Description for Amazon",
+            value: "custom",
+            renderChildren,
+        },
+    ]
+    function handleChoiceListChange(value) {
+        setSelected(value);
+         
+    }
+
+    function handleTextFieldChange(value) {
+        setTextFieldValue(value);
+        // console.log("textFieldValue", textFieldValue);
+    }
+
     useEffect(() => {
-        if (title) {
-            setSelected("Set the same Product Description for Shopify and Amazon")
-        } else {
-            setSelected('')
+        if(data !== undefined){
+        if (data.description!=="") {
+            setSelected([options[0].value])
+       
+            setSave((prevSave) => {
+                return {...prevSave, description: options[0].value}
+            })
+         
+        } else if (!data.description){
+            setSelected([options[1].value])
+            setSave((prevSave) => {
+                return {...prevSave, unset:{...prevSave.unset,description: options[1].value}}
+            })
         }
-        const titlenewdata = save.map((item, i) => {
-            if (index === i) {
-                return { ...item, title: "Set the same Product Description for Shopify and Amazon" }
-            }
-            return item
-        })
-        setSave(titlenewdata)
-    }, [])
+    }
+
+    }, [data])
 
     return (
         <Page fullWidth
@@ -78,17 +85,7 @@ function Descriptionofedit({ title, setSave, save, index = 1 }) {
                 <Layout.Section>
                     <Card sectioned>
                         <ChoiceList
-                            choices={[
-                                {
-                                    label: "Set the same Product Description for Shopify and Amazon",
-                                    value: "Set the same Product Description for Shopify and Amazon",
-                                },
-                                {
-                                    label: "Set a Custom Product Description for Amazon",
-                                    value: "Set a Custom Product Description for Amazon",
-                                    renderChildren,
-                                },
-                            ]}
+                            choices={options}
                             selected={selected}
                             onChange={handleChoiceListChange}
                         />

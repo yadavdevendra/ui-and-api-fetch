@@ -6,31 +6,17 @@ import {
     Text,
     TextField,
     ChoiceList,
+    SettingToggle,
 } from "@shopify/polaris";
 import React, { useEffect } from "react";
 import { useState, useCallback } from "react";
-function Titleofedit({ title, setSave, save ,index=0}) {
-    const [selected, setSelected] = useState([]);
+
+function Titleofedit({ data, setSave, save }) {
+
+    console.log(data?.title, "title data");
+
+    const [selected, setSelected] = useState(["Set the same Product title for Shopify and Amazon"]);
     const [textFieldValue, setTextFieldValue] = useState("");
-
-    function handleChoiceListChange(value) {
-        console.log(value, "value");
-        setSelected(value);
-      save.map((item,i) => {
-            if (index === i) {
-                return { ...item, title: value }
-            }
-            return item
-        })
-
-        // console.log("selected", selected);
-    }
-
-    function handleTextFieldChange(value) {
-        setTextFieldValue(value);
-        // console.log("textFieldValue", textFieldValue);
-    }
-
     const renderChildren = useCallback(
         (isSelected) =>
             isSelected && (
@@ -44,24 +30,48 @@ function Titleofedit({ title, setSave, save ,index=0}) {
             ),
         [handleTextFieldChange, textFieldValue]
     );
-    useEffect(() => {
-        console.log("selected", selected);
-        if (title) {
-            setSelected("Set the same Product title for Shopify and Amazon")
+    const options = [
+        {
+            label: "Set the same Product title for Shopify and Amazon",
+            value: data?.title,
+        },
+        {
+            label: "Set a Custom Product Title for Amazon",
+            value1: "custom",
+            renderChildren,
+        },
+    ]
 
 
-        } else {
-            setSelected('')
-        }
-        const titlenewdata = save.map((item,i) => {
-            if (index === i) {
-                return { ...item, title: "Set the same Product title for Shopify and Amazon" }
-            }
-            return item
+    function handleChoiceListChange(value) {
+        console.log(value, "value");
+        setSelected(value);
+    }
+
+    function handleTextFieldChange(value) {
+        setTextFieldValue(value);
+         setSave((prevSave) => {
+            return { ...prevSave, unset: {...prevSave.unset, custom_text:value} }
         })
-        setSave(titlenewdata)
-    }, [])
-    // console.log("tityle",title);
+    }
+
+
+    useEffect(() => {
+        if (data !== undefined) {
+            if (data.title!=="") {
+                setSelected([options[0].value])
+                setSave((prevSave) => {
+                    return { ...prevSave, title: options[0].value }
+                })
+            } else {
+                setSelected([options[1].value])
+                setSave((prevSave) => {
+                    return { ...prevSave, unset: {...prevSave.unset, title: options[1].value } }
+                })
+            }
+
+        }
+    }, [data])
     return (
         <Page fullWidth
         >
@@ -82,17 +92,7 @@ function Titleofedit({ title, setSave, save ,index=0}) {
                 <Layout.Section>
                     <Card sectioned>
                         <ChoiceList
-                            choices={[
-                                {
-                                    label: "Set the same Product title for Shopify and Amazon",
-                                    value: "Set the same Product title for Shopify and Amazon",
-                                },
-                                {
-                                    label: "Set a Custom Product Title for Amazon",
-                                    value1: "Set a Custom Product Title for Amazon",
-                                    renderChildren,
-                                },
-                            ]}
+                            choices={options}
                             selected={selected}
                             onChange={handleChoiceListChange}
                         />

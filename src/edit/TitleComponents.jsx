@@ -11,10 +11,12 @@ import { payload, token } from '../data/Data'
 
 
 function TitleComponents() {
-  const [title, setTitle] = useState([]);
-  const [save, setSave] = useState([
-    {}, {}, {}, {}, {}, {}
-  ])
+  const [data, setdata] = useState();
+
+  const [save, setSave] = useState({})
+
+
+  // console.log("dfdasfdsfasdf", data);
   console.log(save, "save");
 
   const id = useParams([]);
@@ -39,15 +41,23 @@ function TitleComponents() {
     )
       .then((response) => response.json())
       .then((allData) => {
-        // console.log("Editapidata", allData);
-        if (allData.data.rows[0].title) {
-          setTitle(allData.data.rows[0].title);
+        console.log("Editapidata", allData);
+        if (allData.data.rows[0]) {
+          setdata({
+            title: allData.data.rows[0].title,
+            description: allData.data.rows[0].description,
+            handletime:'',
+            barcode: allData.data.rows[0].barcode,
+            price: allData.data.rows[0].price, 
+            quantity: allData.data.rows[0].quantity
+
+          });
+
         }
       })
       .catch((err) => console.log(err));
   }, []);
 
-  // console.log("save",save);
 
   function handlesave() {
 
@@ -95,12 +105,12 @@ function TitleComponents() {
           </TextContainer>
         </Layout>
       </div>
-      <Titleofedit title={title} save={save} setSave={setSave} />
-      <Descriptionofedit title={title} save={save} setSave={setSave} />
-      <HandlingTime title={title} save={save} setSave={setSave} />
-      <PriceOfEdit title={title} save={save} setSave={setSave} />
-      <Barcodeofedit title={title} save={save} setSave={setSave} />
-      <Quantityofedit title={title} save={save} setSave={setSave} />
+      <Titleofedit data={data} save={save} setSave={setSave} />
+      <Descriptionofedit data={data} save={save} setSave={setSave} />
+      <HandlingTime data={data} save={save} setSave={setSave} />
+      <PriceOfEdit data={data} save={save} setSave={setSave} />
+      <Barcodeofedit data={data} save={save} setSave={setSave} />
+      <Quantityofedit data={data} save={save} setSave={setSave} />
     </Page>
   );
 }

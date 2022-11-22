@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "antd/dist/antd.css";
 
 import { Space, Table } from "antd";
-import { Badge, Checkbox,Stack, Text, Thumbnail } from "@shopify/polaris";
+import { Badge, Checkbox, Stack, Text, Thumbnail } from "@shopify/polaris";
 import { Link } from "react-router-dom";
 import Popovercom from "./Popovercom";
 
@@ -10,6 +10,7 @@ import Popovercom from "./Popovercom";
 const Table1 = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
 
   const token = `eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyX2lkIjoiNjMzMjlkN2YwNDUxYzA3NGFhMGUxNWE4Iiwicm9sZSI6ImN1c3RvbWVyIiwiZXhwIjoxNjk4NzMxOTc2LCJpc3MiOiJodHRwczpcL1wvYXBwcy5jZWRjb21tZXJjZS5jb20iLCJ0b2tlbl9pZCI6IjYzNWY2NDQ4YzQxY2M2MjdhMzBjNmIyMiJ9.o0XvqNpmiAaXQgWC8LgaBrhx6Kjc6rwm0vi-aG-ezZHp3Ph1jcaBqKQq1u9PQSwiCjU6US8xiqMbN_l5JYEwmPOWWQF43Fdt8V2i_dYp2L4mj51rKn9pH7xCloNPAiqCAp7IlfdwXU2NL5cYlb8p4Ve9axRKuPaZ6FpEL49fP8zjlT5gsfR7lr5UD_iKmBH-F-R4ORgQC3vR0CfsW42XXebfTiKf5fh2qBAIrjtSPJyO0jgNxLCTppnT3ruBf3yDL7EcAOFXzUZn_G8NsOSaZp5AvMWIMDkpmBO0VvgkIqSuYOlICki6riprysfwhuwU1XAtpNwI6N571dfUTPhXsw`;
   function test(value) {
@@ -76,7 +77,6 @@ const Table1 = () => {
           title: "Image",
           render: (_, record) => {
             return (<div style={{ display: "flex" }}>
-              <Checkbox />
               <Thumbnail source={record.img} />
             </div>
             )
@@ -136,13 +136,14 @@ const Table1 = () => {
           render: (_, record) => (
             <Space size="middle">
               <a>
-              <Popovercom/>
+                <Popovercom />
               </a>
             </Space>
           ),
         },
       ]}
       dataSource={products}
+      rowSelection={{}}
     />
   );
 };
