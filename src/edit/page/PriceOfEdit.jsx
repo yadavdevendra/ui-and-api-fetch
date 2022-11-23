@@ -1,4 +1,4 @@
-import { Page, Layout, Card, TextContainer, Text, TextField, ChoiceList, } from "@shopify/polaris";
+import { Page, Layout, Card, TextContainer, Text, TextField, ChoiceList, Form, } from "@shopify/polaris";
 import React, { useEffect } from "react";
 import { useState, useCallback } from "react";
 
@@ -8,9 +8,15 @@ function PriceOfEdit({ data, setSave, save }) {
 
 const [selected, setSelected] = useState([]);
 const [textFieldValue, setTextFieldValue] = useState("");
+function handleSubmit(e){
+    setSave((prevSave) => {
+        return { ...prevSave, unset: { ...prevSave.unset, price:(prevSave?.unset?.price ?? 0)+ 1 } }
+    })
+}
 const renderChildren = useCallback(
     (isSelected) =>
         isSelected && (
+            <Form onSubmit={handleSubmit}>
             <TextField
                 label="Minimum Quantity"
                 labelHidden
@@ -18,6 +24,7 @@ const renderChildren = useCallback(
                 value={textFieldValue}
                 autoComplete="off"
             />
+            </Form>
         ),
     [handleTextFieldChange, textFieldValue]
 );
@@ -28,12 +35,15 @@ const options = [
     },
     {
         label: "Set a Custom Product Description for Amazon",
-        value: "custom",
+        value:  "custom",
         renderChildren,
     },
 ]
 function handleChoiceListChange(value) {
     setSelected(value);
+    setSave((prevSave) => {
+        return { ...prevSave, unset: { ...prevSave.unset, price: 0 } }
+    })
      
 }
 
@@ -43,19 +53,17 @@ function handleTextFieldChange(value) {
 }
 
 useEffect(() => {
+    if(data)
+    setTextFieldValue(data?.price||data?.edited?.price)
     if(data !== undefined){
     if (data.price!=="") {
         setSelected([options[0].value])
-   
         setSave((prevSave) => {
             return {...prevSave, price: options[0].value}
         })
      
-    } else if (!data.price){
+    } else{
         setSelected([options[1].value])
-        setSave((prevSave) => {
-            return {...prevSave, unset:{...prevSave.unset,price: options[1].value}}
-        })
     }
 }
 

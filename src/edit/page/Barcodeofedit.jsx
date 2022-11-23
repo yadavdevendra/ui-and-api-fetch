@@ -1,4 +1,4 @@
-import { Page, Layout, Card, TextContainer, Text, TextField, ChoiceList, } from "@shopify/polaris";
+import { Page, Layout, Card, TextContainer, Text, TextField, ChoiceList, Form, } from "@shopify/polaris";
 import React, { useEffect } from "react";
 import { useState, useCallback } from "react";
 
@@ -6,29 +6,21 @@ function Barcodeofedit({ data, setSave, save }) {
     const [selected, setSelected] = useState([]);
     const [textFieldValue, setTextFieldValue] = useState("");
 
-    function handleChoiceListChange(value) {
-        setSelected(value);
-        console.log("selected", selected);
-    }
-
-    function handleTextFieldChange(value) {
-        setTextFieldValue(value);
+    function handleSubmit(e){
         setSave((prevSave) => {
-            return { ...prevSave, unset: {...prevSave.unset, custom_text:value} }
+            return { ...prevSave, unset: { ...prevSave.unset, barcode: Number(prevSave?.unset?.barcode?? 0) + 1 } }
         })
-        console.log("textFieldValue", textFieldValue);
     }
-
     const renderChildren = useCallback(
         (isSelected) =>
             isSelected && (
+                <Form onSubmit={handleSubmit}>
                 <TextField
-                    label="Minimum Quantity"
-                    labelHidden
                     onChange={handleTextFieldChange}
                     value={textFieldValue}
                     autoComplete="off"
                 />
+                </Form>
             ),
         [handleTextFieldChange, textFieldValue]
     );
@@ -39,12 +31,24 @@ function Barcodeofedit({ data, setSave, save }) {
         },
         {
             label: "Set a Custom Product Barcode for Amazon",
-            value: "custom",
+            value:  data?.title||textFieldValue,
             renderChildren,
         },
     ]
 
+    function handleChoiceListChange(value) {
+        setSelected(value);
+        console.log("selected", selected);
+    }
+
+    function handleTextFieldChange(value) {
+        setTextFieldValue(value);
+        console.log("textFieldValue", textFieldValue);
+    }
+
     useEffect(() => {
+        if(data)
+        setTextFieldValue(data?.barcode||data?.edited?.barcode)
         if (data !== undefined ) {
             if (data.barcode!=="") {
                 setSelected(options[0].value)
@@ -53,9 +57,6 @@ function Barcodeofedit({ data, setSave, save }) {
                 })
             } else {
                 setSelected([options[1].value])
-                setSave((prevSave) => {
-                    return { ...prevSave, unset: {...prevSave.unset, barcode: options[1].value} }
-                })
             }
         }
     }, [data])
@@ -79,7 +80,7 @@ function Barcodeofedit({ data, setSave, save }) {
                 </Layout.Section>
                 <Layout.Section>
                     <Card sectioned>
-                        <ChoiceList disabled
+                        <ChoiceList
                             choices={options}
                             selected={selected}
                             onChange={handleChoiceListChange}

@@ -6,28 +6,23 @@ import {
     Text,
     TextField,
     ChoiceList,
+    Form,
 } from "@shopify/polaris";
 import React, { useEffect } from "react";
 import { useState, useCallback } from "react";
 
 function HandlingTime({ data, setSave, save }) {
     const [selected, setSelected] = useState([]);
-    const [textFieldValue, setTextFieldValue] = useState("");
-
-    function handleChoiceListChange(value) {
-        setSelected(value);
-
-        // console.log("selected", selected);
+    const [textFieldValue, setTextFieldValue] = useState("");   
+    function handleSubmit(e){
+        setSave((prevSave) => {
+            return { ...prevSave, unset: { ...prevSave.unset, handletime: (prevSave?.unset?.handletime ?? 0) + 1 } }
+        })
     }
-
-    function handleTextFieldChange(value) {
-        setTextFieldValue(value);
-        // console.log("textFieldValue", textFieldValue);
-    }
-
     const renderChildren = useCallback(
         (isSelected) =>
             isSelected && (
+                <Form onSubmit={handleSubmit}>
                 <TextField
                     label="Minimum Quantity"
                     labelHidden
@@ -35,6 +30,7 @@ function HandlingTime({ data, setSave, save }) {
                     value={textFieldValue}
                     autoComplete="off"
                 />
+                </Form>
             ),
         [handleTextFieldChange, textFieldValue]
     );
@@ -45,25 +41,42 @@ function HandlingTime({ data, setSave, save }) {
         },
         {
             label: "Set a Custom Handling Time",
-            value: "custom",
+            value: data?.title||textFieldValue,
             renderChildren,
         },
     ]
+    function handleChoiceListChange(value) {
+        setSelected(value);
+        setSave((prevSave) => {
+            return { ...prevSave, unset: { ...prevSave.unset, handletime: 0 } }
+        })
+
+        // console.log("selected", selected);
+    }
+
+    function handleTextFieldChange(value) {
+        setTextFieldValue(value);
+      
+        // console.log("textFieldValue", textFieldValue);
+    }
     useEffect(() => {
-        if (data!==undefined) {
-            if (data.handletime !=="") {
-            
+        if (data)
+            setTextFieldValue(data?.handletime || data?.edited?.handletime)
+        if (data !== undefined) {
+            if (data.handletime !== "") {
+
                 setSelected([options[0].value])
                 setSave((prevSave) => {
                     return { ...prevSave, handletime: options[0].value }
                 })
-      
+
             } else {
-         
+
                 setSelected([options[1].value])
                 setSave((prevSave) => {
-                    return { ...prevSave, unset: { ...prevSave.unset,handletime: options[1].value} }
+                    return { ...prevSave, handletime: options[1].value }
                 })
+
             }
         }
     }, [data])

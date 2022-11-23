@@ -46,10 +46,10 @@ function TitleComponents() {
           setdata({
             title: allData.data.rows[0].title,
             description: allData.data.rows[0].description,
-            handletime:'',
+            handletime: '',
             barcode: allData.data.rows[0].barcode,
-            price: allData.data.rows[0].price, 
-            quantity: allData.data.rows[0].quantity
+            price: allData.data.rows[0].price || "",
+            quantity: allData.data.rows[0].quantity || ""
 
           });
 
@@ -83,35 +83,39 @@ function TitleComponents() {
       .then((allData) => { console.log("savedata", allData) })
   }
   return (
-    <Page
-      breadcrumbs={[{ content: 'Products', url: '/listing' }]}
-      title="S/Orange"
-      titleMetadata={<Badge status="success">Active</Badge>}
-      subtitle="Perfect"
-      compactTitle
-      primaryAction={<Button onClick={handlesave}>Save</Button>}
-    >
-      <div style={{ marginTop: 'var(--p-space-5)' }}>
-        <Layout>
-          <TextContainer>
-            <Text id="storeDetails" variant="headingMd" as="h5">
-              Store details
-            </Text>
-            <Text variant="bodyMd" color="subdued" as="p">
-              Choose Whether you want to list your product
-              as your Offer or New ListisetSaveng and edit the details
-              accordigly to know more checkout this guide on Amazo Listings
-            </Text>
-          </TextContainer>
-        </Layout>
-      </div>
-      <Titleofedit data={data} save={save} setSave={setSave} />
-      <Descriptionofedit data={data} save={save} setSave={setSave} />
-      <HandlingTime data={data} save={save} setSave={setSave} />
-      <PriceOfEdit data={data} save={save} setSave={setSave} />
-      <Barcodeofedit data={data} save={save} setSave={setSave} />
-      <Quantityofedit data={data} save={save} setSave={setSave} />
-    </Page>
+    <>
+      <Page
+        breadcrumbs={[{ content: 'Products', url: '/listing' }]}
+        title={data?.title}
+        titleMetadata={<Badge status="success">Active</Badge>}
+        subtitle="Perfect"
+        compactTitle
+        primaryAction={<Button onClick={handlesave}>Save</Button>}
+      >
+
+        <div style={{ marginTop: 'var(--p-space-5)' }}>
+
+          <Layout>
+            <TextContainer>
+              <Text id="storeDetails" variant="headingMd" as="h5">
+                Store details
+              </Text>
+              <Text variant="bodyMd" color="subdued" as="p">
+                Choose Whether you want to list your product
+                as your Offer or New ListisetSaveng and edit the details
+                accordigly to know more checkout this guide on Amazo Listings
+              </Text>
+            </TextContainer>
+          </Layout>
+        </div>
+        <Titleofedit data={data} save={save} setSave={setSave} />
+        <Descriptionofedit data={data} save={save} setSave={setSave} />
+        <HandlingTime data={data} save={save} setSave={setSave} />
+        <PriceOfEdit data={data} save={save} setSave={setSave} />
+        <Barcodeofedit data={data} save={save} setSave={setSave} />
+        <Quantityofedit data={data} save={save} setSave={setSave} />
+      </Page>
+    </>
   );
 }
 export default TitleComponents;

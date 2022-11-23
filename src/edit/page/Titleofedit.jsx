@@ -6,27 +6,29 @@ import {
     Text,
     TextField,
     ChoiceList,
-    SettingToggle,
+    Form,
 } from "@shopify/polaris";
 import React, { useEffect } from "react";
 import { useState, useCallback } from "react";
 
 function Titleofedit({ data, setSave, save }) {
-
-    console.log(data?.title, "title data");
-
     const [selected, setSelected] = useState(["Set the same Product title for Shopify and Amazon"]);
     const [textFieldValue, setTextFieldValue] = useState("");
+    function handleSubmit(e){
+        setSave((prevSave) => {
+            return { ...prevSave, unset: { ...prevSave.unset, title: Number(prevSave.unset.title) + 1 } }
+        })
+    }
     const renderChildren = useCallback(
         (isSelected) =>
             isSelected && (
+                <Form onSubmit={handleSubmit}>
                 <TextField
-                    label="Minimum Quantity"
-                    labelHidden
                     onChange={handleTextFieldChange}
                     value={textFieldValue}
                     autoComplete="off"
                 />
+                </Form>
             ),
         [handleTextFieldChange, textFieldValue]
     );
@@ -37,37 +39,35 @@ function Titleofedit({ data, setSave, save }) {
         },
         {
             label: "Set a Custom Product Title for Amazon",
-            value1: "custom",
+            value1: "cutom",
             renderChildren,
         },
     ]
 
 
     function handleChoiceListChange(value) {
-        console.log(value, "value");
         setSelected(value);
+        setSave((prevSave) => {
+            return { ...prevSave, unset: { ...prevSave.unset, title: 0 } }
+        })
     }
 
     function handleTextFieldChange(value) {
         setTextFieldValue(value);
-         setSave((prevSave) => {
-            return { ...prevSave, unset: {...prevSave.unset, custom_text:value} }
-        })
     }
 
 
     useEffect(() => {
+        if (data)
+            setTextFieldValue(data?.title || data?.edited?.title)
         if (data !== undefined) {
-            if (data.title!=="") {
+            if (data.title !== "") {
                 setSelected([options[0].value])
                 setSave((prevSave) => {
                     return { ...prevSave, title: options[0].value }
                 })
             } else {
                 setSelected([options[1].value])
-                setSave((prevSave) => {
-                    return { ...prevSave, unset: {...prevSave.unset, title: options[1].value } }
-                })
             }
 
         }
