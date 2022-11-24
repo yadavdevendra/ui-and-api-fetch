@@ -60,7 +60,7 @@ function HandlingTime({ data, setSave, save }) {
     }
     useEffect(() => {
         if (data)
-            setTextFieldValue(data?.handletime || data?.edited?.handletime)
+            setTextFieldValue(data?.handletime)
         if (data !== undefined) {
             if (data.edited==false) {
 

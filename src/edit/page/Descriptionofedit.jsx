@@ -55,7 +55,7 @@ function Descriptionofedit({data, setSave, save }) {
     }
     useEffect(() => {
         if (data)
-            setTextFieldValue(data?.title)
+            setTextFieldValue(data?.description)
         if (data !== undefined) {
             if (data.edited == false) {
                 setSelected([options[0].value])

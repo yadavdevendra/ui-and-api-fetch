@@ -49,7 +49,7 @@ function Barcodeofedit({ data, setSave, save }) {
 
     useEffect(() => {
         if(data)
-        setTextFieldValue(data?.title)
+        setTextFieldValue(data?.barcode)
         if (data !== undefined ) {
             if (data.edited == false) {
                 setSelected(options[0].value)

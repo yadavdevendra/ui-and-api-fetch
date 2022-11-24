@@ -53,7 +53,7 @@ function handleTextFieldChange(value) {
 
 useEffect(() => {
     if(data)
-    setTextFieldValue(data?.title)
+    setTextFieldValue(data?.price)
     if(data !== undefined){
     if (data.edited == false) {
         setSelected([options[0].value])
