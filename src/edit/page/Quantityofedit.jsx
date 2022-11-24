@@ -57,9 +57,7 @@ function Quantityofedit({ data, setSave, save }) {
         setTextFieldValue(value);
     }
     useEffect(() => {
-
-        if (data)
-            setTextFieldValue(data?.quantity)
+        if (data)setTextFieldValue(data?.quantity||options[1].value)
         if (data !== undefined) {
             console.log("data", data);
             if (data.edited == false) {

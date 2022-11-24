@@ -31,7 +31,7 @@ function Barcodeofedit({ data, setSave, save }) {
         },
         {
             label: "Set a Custom Product Barcode for Amazon",
-            value:  data?.title||textFieldValue,
+            value: "Set a Custom Product Barcode for Amazon",
             renderChildren,
         },
     ]
@@ -49,7 +49,7 @@ function Barcodeofedit({ data, setSave, save }) {
 
     useEffect(() => {
         if(data)
-        setTextFieldValue(data?.barcode)
+        setTextFieldValue(data?.barcode||options[1].value)
         if (data !== undefined ) {
             if (data.edited == false) {
                 setSelected(options[0].value)

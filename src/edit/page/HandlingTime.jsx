@@ -13,7 +13,7 @@ import { useState, useCallback } from "react";
 
 function HandlingTime({ data, setSave, save }) {
     const [selected, setSelected] = useState([]);
-    const [textFieldValue, setTextFieldValue] = useState("");
+    const [textFieldValue, setTextFieldValue] = useState("custom");
     function handleSubmit(e) {
         setSave((prevSave) => {
             return { ...prevSave, unset: { ...prevSave.unset, handletime: 1 } }
@@ -41,7 +41,7 @@ function HandlingTime({ data, setSave, save }) {
         },
         {
             label: "Set a Custom Handling Time",
-            value: data?.title || textFieldValue,
+            value: 'Set a Custom Handling Time',
             renderChildren,
         },
     ]
@@ -59,11 +59,10 @@ function HandlingTime({ data, setSave, save }) {
         // console.log("textFieldValue", textFieldValue);
     }
     useEffect(() => {
-        if (data)
-            setTextFieldValue(data?.handletime)
+        if (data)setTextFieldValue(data.handletime||options[1].value)
+        //   console.log("options",options[1].value);  
         if (data !== undefined) {
             if (data.edited==false) {
-
                 setSelected([options[0].value])
                 setSave((prevSave) => {
                     return { ...prevSave, handletime: options[0].value }

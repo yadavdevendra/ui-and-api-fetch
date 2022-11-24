@@ -35,7 +35,7 @@ const options = [
     },
     {
         label: "Set a Custom Product Description for Amazon",
-        value:  "custom",
+        value:  "Set a Custom Product Description for Amazon",
         renderChildren,
     },
 ]
@@ -53,7 +53,7 @@ function handleTextFieldChange(value) {
 
 useEffect(() => {
     if(data)
-    setTextFieldValue(data?.price)
+    setTextFieldValue(data?.price||options[1].value)
     if(data !== undefined){
     if (data.edited == false) {
         setSelected([options[0].value])
