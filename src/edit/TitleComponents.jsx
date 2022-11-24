@@ -141,7 +141,7 @@ function TitleComponents() {
         <HandlingTime data={data} save={save} setSave={setSave} />
       <PriceOfEdit data={data} save={save} setSave={setSave} />
     <Barcodeofedit data={data} save={save} setSave={setSave} />
-         {/*    <Quantityofedit data={data} save={save} setSave={setSave} /> */}
+     <Quantityofedit data={data} save={save} setSave={setSave} />
       </Page>
     </>
   );
