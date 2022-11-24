@@ -8,7 +8,7 @@ function Barcodeofedit({ data, setSave, save }) {
 
     function handleSubmit(e){
         setSave((prevSave) => {
-            return { ...prevSave, unset: { ...prevSave.unset, barcode: Number(prevSave?.unset?.barcode?? 0) + 1 } }
+            return { ...prevSave, unset: { ...prevSave.unset, barcode: 1 } }
         })
     }
     const renderChildren = useCallback(
@@ -38,19 +38,20 @@ function Barcodeofedit({ data, setSave, save }) {
 
     function handleChoiceListChange(value) {
         setSelected(value);
-        console.log("selected", selected);
+        const { unset, ...keep } = save
+        setSave(keep)
     }
 
     function handleTextFieldChange(value) {
         setTextFieldValue(value);
-        console.log("textFieldValue", textFieldValue);
+       
     }
 
     useEffect(() => {
         if(data)
-        setTextFieldValue(data?.barcode||data?.edited?.barcode)
+        setTextFieldValue(data?.title)
         if (data !== undefined ) {
-            if (data.barcode!=="") {
+            if (data.edited == false) {
                 setSelected(options[0].value)
                 setSave((prevSave) => {
                     return { ...prevSave, barcode: options[0].value }

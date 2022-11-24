@@ -14,20 +14,20 @@ import { useState, useCallback } from "react";
 function Titleofedit({ data, setSave, save }) {
     const [selected, setSelected] = useState(["Set the same Product title for Shopify and Amazon"]);
     const [textFieldValue, setTextFieldValue] = useState("");
-    function handleSubmit(e){
+    function handleSubmit(e) {
         setSave((prevSave) => {
-            return { ...prevSave, unset: { ...prevSave.unset, title: Number(prevSave.unset.title) + 1 } }
+            return { ...prevSave, unset: { ...prevSave.unset, title: 1 } }
         })
     }
     const renderChildren = useCallback(
         (isSelected) =>
             isSelected && (
                 <Form onSubmit={handleSubmit}>
-                <TextField
-                    onChange={handleTextFieldChange}
-                    value={textFieldValue}
-                    autoComplete="off"
-                />
+                    <TextField
+                        onChange={handleTextFieldChange}
+                        value={textFieldValue}
+                        autoComplete="off"
+                    />
                 </Form>
             ),
         [handleTextFieldChange, textFieldValue]
@@ -47,9 +47,8 @@ function Titleofedit({ data, setSave, save }) {
 
     function handleChoiceListChange(value) {
         setSelected(value);
-        setSave((prevSave) => {
-            return { ...prevSave, unset: { ...prevSave.unset, title: 0 } }
-        })
+        const { unset, ...keep } = save
+        setSave(keep)
     }
 
     function handleTextFieldChange(value) {
@@ -59,9 +58,9 @@ function Titleofedit({ data, setSave, save }) {
 
     useEffect(() => {
         if (data)
-            setTextFieldValue(data?.title || data?.edited?.title)
+            setTextFieldValue(data?.title)
         if (data !== undefined) {
-            if (data.title !== "") {
+            if (data.edited == false) {
                 setSelected([options[0].value])
                 setSave((prevSave) => {
                     return { ...prevSave, title: options[0].value }

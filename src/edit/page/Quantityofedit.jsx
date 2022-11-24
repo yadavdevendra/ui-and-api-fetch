@@ -18,7 +18,7 @@ function Quantityofedit({ data, setSave, save }) {
 
     function handleSubmit(e) {
         setSave((prevSave) => {
-            return { ...prevSave, unset: { ...prevSave.unset, quantity: (prevSave?.unset?.quantity?? 0) + 1 } }
+            return { ...prevSave, unset: { ...prevSave.unset, quantity: 1 } }
         })
     }
     const renderChildren = useCallback(
@@ -49,9 +49,8 @@ function Quantityofedit({ data, setSave, save }) {
     ]
     function handleChoiceListChange(value) {
         setSelected(value);
-        setSave((prevSave) => {
-            return { ...prevSave, unset: { ...prevSave.unset, quantity: 0 } }
-        })
+        const { unset, ...keep } = save
+        setSave(keep)
     }
 
     function handleTextFieldChange(value) {
@@ -62,8 +61,8 @@ function Quantityofedit({ data, setSave, save }) {
         if (data)
             setTextFieldValue(data?.quantity || data?.edited?.quantity)
         if (data !== undefined) {
-            console.log("data",data);
-            if (data.quantity !== "") {
+            console.log("data", data);
+            if (data.edited == false) {
                 setSelected([options[0].value])
                 setSave((prevSave) => {
                     return { ...prevSave, quantity: options[0].value }

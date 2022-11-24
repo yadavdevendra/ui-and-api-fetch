@@ -16,7 +16,7 @@ function Descriptionofedit({data, setSave, save }) {
     const [textFieldValue, setTextFieldValue] = useState("");
     function handleSubmit(e){
         setSave((prevSave) => {
-            return { ...prevSave, unset: { ...prevSave.unset, description: Number(prevSave.unset.description) + 1 } }
+            return { ...prevSave, unset: { ...prevSave.unset, description: 1 } }
         })
     }
     const renderChildren = useCallback(
@@ -46,9 +46,8 @@ function Descriptionofedit({data, setSave, save }) {
 
     function handleChoiceListChange(value) {
         setSelected(value);
-        setSave((prevSave) => {
-            return { ...prevSave, unset: { ...prevSave.unset, description: 0 } }
-        })
+      const{unset,...keep}=save
+      setSave(keep)
     }
 
     function handleTextFieldChange(value) {
@@ -56,9 +55,9 @@ function Descriptionofedit({data, setSave, save }) {
     }
     useEffect(() => {
         if (data)
-            setTextFieldValue(data?.description || data?.edited?.description)
+            setTextFieldValue(data?.title)
         if (data !== undefined) {
-            if (data.description !== "") {
+            if (data.edited == false) {
                 setSelected([options[0].value])
                 setSave((prevSave) => {
                     return { ...prevSave, description: options[0].value }

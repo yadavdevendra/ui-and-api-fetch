@@ -41,9 +41,8 @@ const options = [
 ]
 function handleChoiceListChange(value) {
     setSelected(value);
-    setSave((prevSave) => {
-        return { ...prevSave, unset: { ...prevSave.unset, price: 0 } }
-    })
+ const {unset,...keep} = save
+ setSave(keep)
      
 }
 
@@ -54,9 +53,9 @@ function handleTextFieldChange(value) {
 
 useEffect(() => {
     if(data)
-    setTextFieldValue(data?.price||data?.edited?.price)
+    setTextFieldValue(data?.title)
     if(data !== undefined){
-    if (data.price!=="") {
+    if (data.edited == false) {
         setSelected([options[0].value])
         setSave((prevSave) => {
             return {...prevSave, price: options[0].value}
