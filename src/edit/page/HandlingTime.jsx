@@ -12,11 +12,12 @@ import React, { useEffect } from "react";
 import { useState, useCallback } from "react";
 
 function HandlingTime({ data, setSave, save }) {
+    // console.log("dataedit", data);
     const [selected, setSelected] = useState([]);
-    const [textFieldValue, setTextFieldValue] = useState("custom");
+    const [textFieldValue, setTextFieldValue] = useState("");
     function handleSubmit(e) {
         setSave((prevSave) => {
-            return { ...prevSave, unset: { ...prevSave.unset, handletime: 1 } }
+            return { ...prevSave, unset: { ...prevSave.unset, inventory_fulfillment_latency: 1 } }
         })
     }
     const renderChildren = useCallback(
@@ -24,8 +25,6 @@ function HandlingTime({ data, setSave, save }) {
             isSelected && (
                 <Form onSubmit={handleSubmit}>
                     <TextField
-                        label="Minimum Quantity"
-                        labelHidden
                         onChange={handleTextFieldChange}
                         value={textFieldValue}
                         autoComplete="off"
@@ -36,49 +35,46 @@ function HandlingTime({ data, setSave, save }) {
     );
     const options = [
         {
-            label: "Use the same Handling Time As in the Product Template",
-            value: data?.handletime
+            label: "Set the same Product inventory_fulfillment_latency for Shopify and Amazon",
+            value: "default",
         },
         {
-            label: "Set a Custom Handling Time",
-            value: 'Set a Custom Handling Time',
+            label: "Set a Custom Product inventory_fulfillment_latency for Amazon",
+            value: "custom",
             renderChildren,
         },
     ]
+
+
     function handleChoiceListChange(value) {
         setSelected(value);
+        setTextFieldValue(data?.edited?.inventory_fulfillment_latency || data?.inventory_fulfillment_latency)
         const { unset, ...keep } = save
-        setSave(keep)
+        setSave({ ...keep, inventory_fulfillment_latency: data.inventory_fulfillment_latency })
 
-        // console.log("selected", selected);
     }
 
     function handleTextFieldChange(value) {
         setTextFieldValue(value);
-
-        // console.log("textFieldValue", textFieldValue);
     }
     useEffect(() => {
-        if (data)setTextFieldValue(data.handletime||options[1].value)
-        //   console.log("options",options[1].value);  
+        if (data)
+            setTextFieldValue(data?.inventory_fulfillment_latency)
         if (data !== undefined) {
-            if (data.edited==false) {
-                setSelected([options[0].value])
+            if (data?.edited?.inventory_fulfillment_latency) {
+                setSelected(["default"])
                 setSave((prevSave) => {
-                    return { ...prevSave, handletime: options[0].value }
+                    return { ...prevSave, inventory_fulfillment_latency: data?.edited?.inventory_fulfillment_latency || data?.inventory_fulfillment_latency}
                 })
-
             } else {
-
-                setSelected([options[1].value])
-                // setSave((prevSave) => {
-                //     return { ...prevSave, handletime: options[1].value }
-                // })
-
+                setSelected(["custom"])
+                setSave((prevSave) => {
+                    return { ...prevSave, inventory_fulfillment_latency: data?.edited?.inventory_fulfillment_latency || data?.inventory_fulfillment_latency}
+                })
             }
+
         }
     }, [data])
-
     return (
         <Page fullWidth
         >
@@ -87,7 +83,7 @@ function HandlingTime({ data, setSave, save }) {
                     <div style={{ marginTop: "var(--p-space-5)" }}>
                         <TextContainer>
                             <Text id="storeDetails" variant="headingMd" as="h4">
-                                "Heading Time"
+                                Handling Time
                             </Text>
                             <Text variant="bodyMd" color="subdued" as="p">
                                 Shopify and your customers will use this information to contact

@@ -12,10 +12,9 @@ import React, { useEffect } from "react";
 import { useState, useCallback } from "react";
 
 function Quantityofedit({ data, setSave, save }) {
+    // console.log("dataedit", data);
     const [selected, setSelected] = useState([]);
     const [textFieldValue, setTextFieldValue] = useState("");
-
-
     function handleSubmit(e) {
         setSave((prevSave) => {
             return { ...prevSave, unset: { ...prevSave.unset, quantity: 1 } }
@@ -26,8 +25,6 @@ function Quantityofedit({ data, setSave, save }) {
             isSelected && (
                 <Form onSubmit={handleSubmit}>
                     <TextField
-                        label="Minimum Quantity"
-                        labelHidden
                         onChange={handleTextFieldChange}
                         value={textFieldValue}
                         autoComplete="off"
@@ -39,7 +36,7 @@ function Quantityofedit({ data, setSave, save }) {
     const options = [
         {
             label: "Set the same Product Quantity for Shopify and Amazon",
-            value: data?.quantity,
+            value: "default",
         },
         {
             label: "Set a Custom Product Quantity for Amazon",
@@ -47,30 +44,37 @@ function Quantityofedit({ data, setSave, save }) {
             renderChildren,
         },
     ]
+
+
     function handleChoiceListChange(value) {
         setSelected(value);
+        setTextFieldValue(data?.edited?.quantity || data?.quantity)
         const { unset, ...keep } = save
-        setSave(keep)
+        setSave({ ...keep, quantity: data.quantity })
+
     }
 
     function handleTextFieldChange(value) {
         setTextFieldValue(value);
     }
     useEffect(() => {
-        if (data)setTextFieldValue(data?.quantity||options[1].value)
+        if (data)
+            setTextFieldValue(data?.quantity)
         if (data !== undefined) {
-            console.log("data", data);
-            if (data.edited == false) {
-                setSelected([options[0].value])
+            if (data?.edited?.quantity) {
+                setSelected(["default"])
                 setSave((prevSave) => {
-                    return { ...prevSave, quantity: options[0].value }
+                    return { ...prevSave, quantity: data?.edited?.quantity || data?.quantity}
                 })
             } else {
-                setSelected([options[1].value])
+                setSelected(["custom"])
+                setSave((prevSave) => {
+                    return { ...prevSave, quantity: data?.edited?.quantity || data?.quantity}
+                })
             }
+
         }
     }, [data])
-
     return (
         <Page fullWidth
         >

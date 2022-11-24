@@ -12,7 +12,8 @@ import React, { useEffect } from "react";
 import { useState, useCallback } from "react";
 
 function Titleofedit({ data, setSave, save }) {
-    const [selected, setSelected] = useState(["Set the same Product title for Shopify and Amazon"]);
+    // console.log("dataedit", data);
+    const [selected, setSelected] = useState([]);
     const [textFieldValue, setTextFieldValue] = useState("");
     function handleSubmit(e) {
         setSave((prevSave) => {
@@ -35,11 +36,11 @@ function Titleofedit({ data, setSave, save }) {
     const options = [
         {
             label: "Set the same Product title for Shopify and Amazon",
-            value: data?.title,
+            value: "default",
         },
         {
             label: "Set a Custom Product Title for Amazon",
-            value1: "cutom",
+            value: "custom",
             renderChildren,
         },
     ]
@@ -47,26 +48,29 @@ function Titleofedit({ data, setSave, save }) {
 
     function handleChoiceListChange(value) {
         setSelected(value);
+        setTextFieldValue(data?.edited?.title || data?.title)
         const { unset, ...keep } = save
-        setSave(keep)
+        setSave({ ...keep, title: data.title })
+
     }
 
     function handleTextFieldChange(value) {
         setTextFieldValue(value);
     }
-
-
     useEffect(() => {
         if (data)
             setTextFieldValue(data?.title)
         if (data !== undefined) {
-            if (data.edited == false) {
-                setSelected([options[0].value])
+            if (data?.edited?.title) {
+                setSelected(["default"])
                 setSave((prevSave) => {
-                    return { ...prevSave, title: options[0].value }
+                    return { ...prevSave, title: data?.edited?.title || data?.title}
                 })
             } else {
-                setSelected([options[1].value])
+                setSelected(["custom"])
+                setSave((prevSave) => {
+                    return { ...prevSave, title: data?.edited?.title || data?.title}
+                })
             }
 
         }

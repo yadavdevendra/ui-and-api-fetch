@@ -55,7 +55,10 @@ const Table1 = () => {
             title: <Link to={`/listing/${item['container_id']}`}>{item["title"]}</Link>,
             product:
               item["source_product_id"] === item.items[0]["source_product_id"]
-                ? { sku: item.items[0].sku, price: item.items[0].price || "N/A", barcode: item.items[0].barcode || "N/A" }
+                ? { sku: item.items[0].sku, price: item.items[0].price || "N/A",
+                 barcode: item.items[0].barcode || "N/A",
+                 quantity: item.items[0].quantity || "N/A" 
+                 }
                 : "NA",
             inventory: test(item.items),
             variant_attributes: item["variant_attributes"],
@@ -107,6 +110,7 @@ const Table1 = () => {
                 <Badge>SKU:{record.product.sku}</Badge>
                 <Badge>Price:{record.product.price}</Badge>
                 <Badge>Barcode:{record.product.barcode}</Badge>
+                <Badge>Quantity:{record.product.quantity}</Badge>
               </Stack>
             );
           },

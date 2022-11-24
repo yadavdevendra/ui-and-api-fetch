@@ -11,10 +11,11 @@ import {
 import React, { useEffect } from "react";
 import { useState, useCallback } from "react";
 
-function Descriptionofedit({data, setSave, save }) {
+function Descriptionofedit({ data, setSave, save }) {
+    // console.log("dataedit", data);
     const [selected, setSelected] = useState([]);
     const [textFieldValue, setTextFieldValue] = useState("");
-    function handleSubmit(e){
+    function handleSubmit(e) {
         setSave((prevSave) => {
             return { ...prevSave, unset: { ...prevSave.unset, description: 1 } }
         })
@@ -23,31 +24,34 @@ function Descriptionofedit({data, setSave, save }) {
         (isSelected) =>
             isSelected && (
                 <Form onSubmit={handleSubmit}>
-                <TextField
-                    onChange={handleTextFieldChange}
-                    value={textFieldValue}
-                    autoComplete="off"
-                />
+                    <TextField
+                        onChange={handleTextFieldChange}
+                        value={textFieldValue}
+                        autoComplete="off"
+                    />
                 </Form>
             ),
         [handleTextFieldChange, textFieldValue]
     );
-    const options=[
+    const options = [
         {
-            label: "Set the same Product Description for Shopify and Amazon",
-            value: data?.description
+            label: "Set the same Product description for Shopify and Amazon",
+            value: "default",
         },
         {
-            label: "Set a Custom Product Description for Amazon",
-            value: "Custom",
+            label: "Set a Custom Product description for Amazon",
+            value: "custom",
             renderChildren,
         },
     ]
 
+
     function handleChoiceListChange(value) {
         setSelected(value);
-      const{unset,...keep}=save
-      setSave(keep)
+        setTextFieldValue(data?.edited?.description || data?.description)
+        const { unset, ...keep } = save
+        setSave({ ...keep, description: data.description })
+
     }
 
     function handleTextFieldChange(value) {
@@ -57,18 +61,20 @@ function Descriptionofedit({data, setSave, save }) {
         if (data)
             setTextFieldValue(data?.description)
         if (data !== undefined) {
-            if (data.edited == false) {
-                setSelected([options[0].value])
+            if (data?.edited?.description) {
+                setSelected(["default"])
                 setSave((prevSave) => {
-                    return { ...prevSave, description: options[0].value }
+                    return { ...prevSave, description: data?.edited?.description || data?.description}
                 })
             } else {
-                setSelected([options[1].value])
+                setSelected(["custom"])
+                setSave((prevSave) => {
+                    return { ...prevSave, description: data?.edited?.description || data?.description}
+                })
             }
 
         }
     }, [data])
-
     return (
         <Page fullWidth
         >
@@ -77,11 +83,11 @@ function Descriptionofedit({data, setSave, save }) {
                     <div style={{ marginTop: "var(--p-space-5)" }}>
                         <TextContainer>
                             <Text id="storeDetails" variant="headingMd" as="h4">
-                            Variant Description
+                                Variant Description
                             </Text>
                             <Text variant="bodyMd" color="subdued" as="p">
-                            Shopify and your customers will use this information to contact
-                            you.
+                                Shopify and your customers will use this information to contact
+                                you.
                             </Text>
                         </TextContainer>
                     </div>

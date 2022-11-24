@@ -19,12 +19,11 @@ import { payload, token } from "../data/Data";
 
 function TitleComponents() {
   const [data, setdata] = useState();
-  // const [childdata, setChilddata] = useState();
   const [save, setSave] = useState({});
 
   // console.log("data", data);
-  // console.log("childdata", childdata);
-  console.log(save, "save");
+
+  // console.log(save, "save");
 
   const id = useParams([]);
   var result = Object.keys(id).map((key) => [id[key]]);
@@ -50,47 +49,14 @@ function TitleComponents() {
       .then((allData) => {
         console.log("Editapidata", allData.data.rows);
         allData.data.rows.map((item) => {
-          // console.log("item.edited", item.edited.title);
-          // console.log("visibility", item.visibility);
-          if (item.visibility === "Catalog and Search") {
-            if(item.edited.title){  
-              setdata({
-                edited:true,
-                title: item.edited.title,
-                description: item.description,
-                handletime: "",
-                barcode: item.barcode,
-                price: item.price || "",
-                quantity: item.quantity || "",
-              });
-            }
-            else{
-              setdata({
-                edited:false,
-                title: item.title,
-                description: item.description,
-                handletime: "",
-                barcode: item.barcode,
-                price: item.price || "",
-                quantity: item.quantity || "",
-              });
-            }
-          }
-        
-          // setChilddata({
-          //   title: item.title,
-          //   description: item.description,
-          //   handletime: "",
-          //   barcode: item.barcode,
-          //   price: item.price || "",
-          //   quantity: item.quantity || "",
-          // });
+          if (item.visibility === "Catalog and Search") { setdata(item) }
         });
       })
       .catch((err) => console.log(err));
   }, []);
 
   function handlesave() {
+    console.log("click on save",save);
     // const paylods = JSON.stringify(payload);
     // // console.log("result", paylods);
     // fetch(`https://multi-account.sellernext.com/home/public/connector/product/saveProduct`,
@@ -139,9 +105,9 @@ function TitleComponents() {
         <Titleofedit data={data} save={save} setSave={setSave} />
         <Descriptionofedit data={data} save={save} setSave={setSave} />
         <HandlingTime data={data} save={save} setSave={setSave} />
-      <PriceOfEdit data={data} save={save} setSave={setSave} />
-    <Barcodeofedit data={data} save={save} setSave={setSave} />
-     <Quantityofedit data={data} save={save} setSave={setSave} />
+        <PriceOfEdit data={data} save={save} setSave={setSave} />
+        <Barcodeofedit data={data} save={save} setSave={setSave} />
+        <Quantityofedit data={data} save={save} setSave={setSave} />
       </Page>
     </>
   );
