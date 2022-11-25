@@ -59,7 +59,7 @@ function Quantityofedit({ data, setSave, save }) {
     }
     useEffect(() => {
         if (data)
-            setTextFieldValue(data?.quantity)
+            setTextFieldValue(data?.edited?.quantity || data?.quantity)
         if (data !== undefined) {
             if (data?.edited?.quantity) {
                 setSelected(["custom"])

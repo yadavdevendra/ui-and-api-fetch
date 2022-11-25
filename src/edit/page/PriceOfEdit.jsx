@@ -59,7 +59,7 @@ function PriceOfEdit({ data, setSave, save }) {
     }
     useEffect(() => {
         if (data)
-            setTextFieldValue(data?.price)
+            setTextFieldValue(data?.edited?.price || data?.price)
         if (data !== undefined) {
             if (data?.edited?.price) {
                 setSelected(["custom"])
