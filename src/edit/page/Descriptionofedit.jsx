@@ -62,12 +62,12 @@ function Descriptionofedit({ data, setSave, save }) {
             setTextFieldValue(data?.description)
         if (data !== undefined) {
             if (data?.edited?.description) {
-                setSelected(["default"])
+                setSelected(["custom"])
                 setSave((prevSave) => {
                     return { ...prevSave, description: data?.edited?.description || data?.description}
                 })
             } else {
-                setSelected(["custom"])
+                setSelected(["default"])
                 setSave((prevSave) => {
                     return { ...prevSave, description: data?.edited?.description || data?.description}
                 })

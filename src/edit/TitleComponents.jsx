@@ -57,26 +57,26 @@ function TitleComponents() {
 
   function handlesave() {
     console.log("click on save",save);
-    // const paylods = JSON.stringify(payload);
-    // // console.log("result", paylods);
-    // fetch(`https://multi-account.sellernext.com/home/public/connector/product/saveProduct`,
-    //   {
-    //     method: "POST",
-    //     body: paylods,
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //       "Ced-Source-Id": 500,
-    //       "Ced-Source-Name": "shopify",
-    //       "Ced-Target-Id": 640,
-    //       "Ced-Target-Name": "amazon",
-    //       appCode:
-    //         "eyJzaG9waWZ5IjoiYW1hem9uX3NhbGVzX2NoYW5uZWwiLCJhbWF6b24iOiJhbWF6b24ifQ==",
-    //       appTag: "amazon_sales_channel",
-    //     },
-    //   }
-    // )
-    //   .then((response) => response.json())
-    //   .then((allData) => { console.log("savedata", allData) })
+  //   const paylods = JSON.stringify({...payload,...save});
+  //   // console.log("result", paylods);
+  //   fetch(`https://multi-account.sellernext.com/home/public/connector/product/saveProduct`,
+  //     {
+  //       method: "POST",
+  //       body: paylods,
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //         "Ced-Source-Id": 500,
+  //         "Ced-Source-Name": "shopify",
+  //         "Ced-Target-Id": 640,
+  //         "Ced-Target-Name": "amazon",
+  //         appCode:
+  //           "eyJzaG9waWZ5IjoiYW1hem9uX3NhbGVzX2NoYW5uZWwiLCJhbWF6b24iOiJhbWF6b24ifQ==",
+  //         appTag: "amazon_sales_channel",
+  //       },
+  //     }
+  //   )
+  //     .then((response) => response.json())
+  //     .then((allData) => { console.log("savedata", allData) })
   }
   return (
     <>

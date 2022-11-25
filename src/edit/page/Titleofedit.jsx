@@ -59,9 +59,9 @@ function Titleofedit({ data, setSave, save }) {
     }
     useEffect(() => {
         if (data)
-            setTextFieldValue(data?.title)
+            setTextFieldValue(data?.edited?.title || data?.title)
         if (data !== undefined) {
-            if (data?.edited?.title) {
+            if (!data?.edited?.title) {
                 setSelected(["default"])
                 setSave((prevSave) => {
                     return { ...prevSave, title: data?.edited?.title || data?.title}

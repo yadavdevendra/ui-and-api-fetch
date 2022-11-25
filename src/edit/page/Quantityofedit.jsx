@@ -62,12 +62,12 @@ function Quantityofedit({ data, setSave, save }) {
             setTextFieldValue(data?.quantity)
         if (data !== undefined) {
             if (data?.edited?.quantity) {
-                setSelected(["default"])
+                setSelected(["custom"])
                 setSave((prevSave) => {
                     return { ...prevSave, quantity: data?.edited?.quantity || data?.quantity}
                 })
             } else {
-                setSelected(["custom"])
+                setSelected(["default"])
                 setSave((prevSave) => {
                     return { ...prevSave, quantity: data?.edited?.quantity || data?.quantity}
                 })

@@ -62,12 +62,12 @@ function PriceOfEdit({ data, setSave, save }) {
             setTextFieldValue(data?.price)
         if (data !== undefined) {
             if (data?.edited?.price) {
-                setSelected(["default"])
+                setSelected(["custom"])
                 setSave((prevSave) => {
                     return { ...prevSave, price: data?.edited?.price || data?.price}
                 })
             } else {
-                setSelected(["custom"])
+                setSelected(["default"])
                 setSave((prevSave) => {
                     return { ...prevSave, price: data?.edited?.price || data?.price}
                 })

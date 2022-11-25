@@ -53,12 +53,12 @@ function Barcodeofedit({ data, setSave, save }) {
                 setTextFieldValue(data?.barcode)
             if (data !== undefined) {
                 if (data?.edited?.barcode) {
-                    setSelected(["default"])
+                    setSelected(["custom"])
                     setSave((prevSave) => {
                         return { ...prevSave, barcode: data?.edited?.barcode || data?.barcode}
                     })
                 } else {
-                    setSelected(["custom"])
+                    setSelected(["default"])
                     setSave((prevSave) => {
                         return { ...prevSave, barcode: data?.edited?.barcode || data?.barcode}
                     })

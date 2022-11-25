@@ -14,7 +14,7 @@ const Table1 = () => {
 
   const token = `eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyX2lkIjoiNjMzMjlkN2YwNDUxYzA3NGFhMGUxNWE4Iiwicm9sZSI6ImN1c3RvbWVyIiwiZXhwIjoxNjk4NzMxOTc2LCJpc3MiOiJodHRwczpcL1wvYXBwcy5jZWRjb21tZXJjZS5jb20iLCJ0b2tlbl9pZCI6IjYzNWY2NDQ4YzQxY2M2MjdhMzBjNmIyMiJ9.o0XvqNpmiAaXQgWC8LgaBrhx6Kjc6rwm0vi-aG-ezZHp3Ph1jcaBqKQq1u9PQSwiCjU6US8xiqMbN_l5JYEwmPOWWQF43Fdt8V2i_dYp2L4mj51rKn9pH7xCloNPAiqCAp7IlfdwXU2NL5cYlb8p4Ve9axRKuPaZ6FpEL49fP8zjlT5gsfR7lr5UD_iKmBH-F-R4ORgQC3vR0CfsW42XXebfTiKf5fh2qBAIrjtSPJyO0jgNxLCTppnT3ruBf3yDL7EcAOFXzUZn_G8NsOSaZp5AvMWIMDkpmBO0VvgkIqSuYOlICki6riprysfwhuwU1XAtpNwI6N571dfUTPhXsw`;
   function test(value) {
-    console.log("value", value);
+    // console.log("value", value);
     let temp = 0
     value.forEach((item) => {
       if (item.quantity) {
@@ -48,7 +48,7 @@ const Table1 = () => {
       .then((allData) => {
         // console.log(data.data.rows);
         let newData = allData?.data?.rows?.map((item) => {
-          console.log(item, "item");
+          // console.log(item, "item");
           return {
             img: item["main_image"],
             key: item._id["$oid"],
@@ -69,7 +69,7 @@ const Table1 = () => {
       })
       .catch((err) => console.log(err));
   }, []);
-  console.log("arr", products);
+  console.log("products", products);
   return (
     <Table
       columns={[
@@ -147,7 +147,7 @@ const Table1 = () => {
         },
       ]}
       dataSource={products}
-      rowSelection={{}}
+      rowSelection={{products}}
     />
   );
 };

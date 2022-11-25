@@ -13,7 +13,7 @@ import { useState, useCallback } from "react";
 
 function HandlingTime({ data, setSave, save }) {
     // console.log("dataedit", data);
-    console.log(save,"wdswdc");
+    // console.log(save,"wdswdc");
     const [selected, setSelected] = useState([]);
     const [textFieldValue, setTextFieldValue] = useState("");
     function handleSubmit(e) {
@@ -49,9 +49,9 @@ function HandlingTime({ data, setSave, save }) {
 
     function handleChoiceListChange(value) {
         setSelected(value);
-        setTextFieldValue(data?.edited?.inventory_fulfillment_latency || data?.inventory_fulfillment_latency)
+        setTextFieldValue(data?.edited?.inventory_fulfillment_latency )
         const { unset, ...keep } = save
-        setSave({ ...keep, inventory_fulfillment_latency: data?.edited?.inventory_fulfillment_latency })
+        setSave({ ...keep, inventory_fulfillment_latency: data?.edited?.inventory_fulfillment_latency  })
 
     }
 
@@ -60,15 +60,15 @@ function HandlingTime({ data, setSave, save }) {
     }
     useEffect(() => {
         if (data)
-            setTextFieldValue(data?.inventory_fulfillment_latency)
+            setTextFieldValue(data?.edited?.inventory_fulfillment_latency)
         if (data !== undefined) {
             if (data?.edited?.inventory_fulfillment_latency) {
-                setSelected(["default"])
+                setSelected(["custom"])
                 setSave((prevSave) => {
                     return { ...prevSave, inventory_fulfillment_latency: data?.edited?.inventory_fulfillment_latency }
                 })
             } else {
-                setSelected(["custom"])
+                setSelected(["default"])
                 setSave((prevSave) => {
                     return { ...prevSave, inventory_fulfillment_latency: data?.edited?.inventory_fulfillment_latency }
                 })
