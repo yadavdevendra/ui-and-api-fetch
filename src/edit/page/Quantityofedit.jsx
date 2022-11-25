@@ -50,7 +50,7 @@ function Quantityofedit({ data, setSave, save }) {
         setSelected(value);
         setTextFieldValue(data?.edited?.quantity || data?.quantity)
         const { unset, ...keep } = save
-        setSave({ ...keep, quantity: data.quantity })
+        setSave({ ...keep, quantity: data?.edited?.quantity || data?.quantity })
 
     }
 

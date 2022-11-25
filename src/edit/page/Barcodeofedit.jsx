@@ -41,7 +41,7 @@ function Barcodeofedit({ data, setSave, save }) {
             setSelected(value);
             setTextFieldValue(data?.edited?.barcode || data?.barcode)
             const { unset, ...keep } = save
-            setSave({ ...keep, barcode: data.barcode })
+            setSave({ ...keep, barcode: data?.edited?.barcode || data?.barcode})
     
         }
     

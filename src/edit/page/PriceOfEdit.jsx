@@ -50,7 +50,7 @@ function PriceOfEdit({ data, setSave, save }) {
         setSelected(value);
         setTextFieldValue(data?.edited?.price || data?.price)
         const { unset, ...keep } = save
-        setSave({ ...keep, price: data.price })
+        setSave({ ...keep, price: data?.edited?.price || data?.price })
 
     }
 

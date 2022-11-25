@@ -50,7 +50,7 @@ function Titleofedit({ data, setSave, save }) {
         setSelected(value);
         setTextFieldValue(data?.edited?.title || data?.title)
         const { unset, ...keep } = save
-        setSave({ ...keep, title: data.title })
+        setSave({ ...keep, title: data?.edited?.title || data?.title })
 
     }
 

@@ -13,11 +13,12 @@ import { useState, useCallback } from "react";
 
 function HandlingTime({ data, setSave, save }) {
     // console.log("dataedit", data);
+    console.log(save,"wdswdc");
     const [selected, setSelected] = useState([]);
     const [textFieldValue, setTextFieldValue] = useState("");
     function handleSubmit(e) {
         setSave((prevSave) => {
-            return { ...prevSave, unset: { ...prevSave.unset, inventory_fulfillment_latency: 1 } }
+            return { ...prevSave, unset: { ...prevSave.unset, inventory_fulfillment_latency: "1" } }
         })
     }
     const renderChildren = useCallback(
@@ -50,7 +51,7 @@ function HandlingTime({ data, setSave, save }) {
         setSelected(value);
         setTextFieldValue(data?.edited?.inventory_fulfillment_latency || data?.inventory_fulfillment_latency)
         const { unset, ...keep } = save
-        setSave({ ...keep, inventory_fulfillment_latency: data.inventory_fulfillment_latency })
+        setSave({ ...keep, inventory_fulfillment_latency: data?.edited?.inventory_fulfillment_latency })
 
     }
 
@@ -64,12 +65,12 @@ function HandlingTime({ data, setSave, save }) {
             if (data?.edited?.inventory_fulfillment_latency) {
                 setSelected(["default"])
                 setSave((prevSave) => {
-                    return { ...prevSave, inventory_fulfillment_latency: data?.edited?.inventory_fulfillment_latency || data?.inventory_fulfillment_latency}
+                    return { ...prevSave, inventory_fulfillment_latency: data?.edited?.inventory_fulfillment_latency }
                 })
             } else {
                 setSelected(["custom"])
                 setSave((prevSave) => {
-                    return { ...prevSave, inventory_fulfillment_latency: data?.edited?.inventory_fulfillment_latency || data?.inventory_fulfillment_latency}
+                    return { ...prevSave, inventory_fulfillment_latency: data?.edited?.inventory_fulfillment_latency }
                 })
             }
 

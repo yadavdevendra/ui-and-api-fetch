@@ -50,7 +50,7 @@ function Descriptionofedit({ data, setSave, save }) {
         setSelected(value);
         setTextFieldValue(data?.edited?.description || data?.description)
         const { unset, ...keep } = save
-        setSave({ ...keep, description: data.description })
+        setSave({ ...keep, description: data?.edited?.description || data?.description })
 
     }
 
