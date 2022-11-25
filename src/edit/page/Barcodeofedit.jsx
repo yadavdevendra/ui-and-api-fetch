@@ -50,7 +50,7 @@ function Barcodeofedit({ data, setSave, save }) {
         }
         useEffect(() => {
             if (data)
-                setTextFieldValue(data?.barcode)
+                setTextFieldValue(data?.edited?.barcode || data?.barcode)
             if (data !== undefined) {
                 if (data?.edited?.barcode) {
                     setSelected(["custom"])
